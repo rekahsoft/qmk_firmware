@@ -161,11 +161,6 @@ float tone_colemak[][2]    = SONG(COLEMAK_SOUND);
 // TODO: float tone_steno[][2]      = SONG(...);
 #endif
 
-void persistent_default_layer_set(uint16_t default_layer) {
-  eeconfig_update_default_layer(default_layer);
-  default_layer_set(default_layer);
-}
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case QWERTY:
@@ -173,7 +168,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         #ifdef AUDIO_ENABLE
           PLAY_SONG(tone_qwerty);
         #endif
-        persistent_default_layer_set(1UL<<_QWERTY);
+        set_single_persistent_default_layer(_QWERTY);
       }
       return false;
     case COLEMAK:
@@ -181,7 +176,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         #ifdef AUDIO_ENABLE
           PLAY_SONG(tone_colemak);
         #endif
-        persistent_default_layer_set(1UL<<_COLEMAK);
+        set_single_persistent_default_layer(_COLEMAK);
       }
       return false;
     case DVORAK:
@@ -189,7 +184,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         #ifdef AUDIO_ENABLE
           PLAY_SONG(tone_dvorak);
         #endif
-        persistent_default_layer_set(1UL<<_DVORAK);
+        set_single_persistent_default_layer(_DVORAK);
       }
       return false;
     case STENO:
@@ -198,7 +193,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           // TODO: audio
           PLAY_SONG(tone_steno);
         #endif
-        persistent_default_layer_set(1UL<<_STENO);
+        set_single_persistent_default_layer(_STENO);
       }
       return false;
     case RAISE:
