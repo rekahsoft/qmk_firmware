@@ -1,5 +1,4 @@
 #include QMK_KEYBOARD_H
-#include "keymap_steno.h"
 
 #define _QWERTY 0
 #define _COLEMAK 1
@@ -7,7 +6,7 @@
 #define _STENO 3
 #define _LOWER 4
 #define _RAISE 5
-#define _ADJUST 16
+#define _ADJUST 6
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
@@ -147,7 +146,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] =  LAYOUT_ortho_4x12( \
-  _______, RESET,   _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_DEL, \
+  _______, QK_REBOOT, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_DEL, \
   _______, _______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  COLEMAK, DVORAK,  STENO,   _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ \
