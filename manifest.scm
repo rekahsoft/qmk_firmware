@@ -1,0 +1,15 @@
+(specifications->manifest
+ '("avrdude"
+   "bash"
+   "coreutils"
+   "dfu-programmer"
+   "dfu-util"
+   "diffutils"
+   "gawk"
+   "gcc-cross-avr-toolchain"
+   "git"
+   "grep"
+   "make"
+   "python-wrapper"
+   "qmk"
+   "sed"))
