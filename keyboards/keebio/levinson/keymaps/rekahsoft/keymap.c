@@ -1,8 +1,8 @@
 #include QMK_KEYBOARD_H
 
 #define _QWERTY 0
-#define _COLEMAK 1
-#define _DVORAK 2
+#define _DVORAK 1
+#define _COLEMAK 2
 #define _STENO 3
 #define _LOWER 4
 #define _RAISE 5
@@ -10,8 +10,8 @@
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
-  COLEMAK,
   DVORAK,
+  COLEMAK,
   STENO,
   LOWER,
   RAISE,
@@ -21,7 +21,6 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // TODO: tenkey layer
-// TODO: Motion layer
 // TODO: MIDI layer
 
 /* Qwerty
@@ -42,6 +41,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ADJUST,                LM(_RAISE, MOD_LGUI), KC_LGUI, KC_LALT, LOWER,   KC_SPC,  KC_SPC,  RAISE,   MT(MOD_LALT, KC_LEFT), MT(MOD_LGUI, KC_DOWN), KC_UP,   MT(MOD_LALT, KC_RGHT)  \
 ),
 
+/* Dvorak
+ * ,-----------------------------------------------------------------------------------.
+ * | Tab  |   "  |   ,  |   .  |   P  |   Y  |   F  |   G  |   C  |   R  |   L  | Bksp |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * | Esc  |   A  |   O  |   E  |   U  |   I  |   D  |   H  |   T  |   N  |   S  |  /   |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * | Shift|   ;  |   Q  |   J  |   K  |   X  |   B  |   M  |   W  |   V  |   Z  |Enter |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |Adjust| Ctrl | Alt  | GUI  |Lower |Space |Space |Raise | Left | Down |  Up  |Right |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_DVORAK] = LAYOUT_ortho_4x12( \
+  KC_TAB,                KC_QUOT,              KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,                  KC_R,                  KC_L,  KC_BSPC,               \
+  MT(MOD_LCTL, KC_ESC),  KC_A,                 KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,                  KC_N,                  KC_S,  MT(MOD_RCTL, KC_SLSH), \
+  MT(MOD_LSFT, KC_CAPS), KC_SCLN,              KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,                  KC_V,                  KC_Z,  MT(MOD_RSFT, KC_ENT),  \
+  ADJUST,                LM(_RAISE, MOD_LGUI), KC_LGUI, KC_LALT, LOWER,   KC_SPC,  KC_SPC,  RAISE,   MT(MOD_LALT, KC_LEFT), MT(MOD_LGUI, KC_DOWN), KC_UP, MT(MOD_LALT, KC_RGHT)  \
+),
+
 /* Colemak
  * ,-----------------------------------------------------------------------------------.
  * | Tab  |   Q  |   W  |   F  |   P  |   G  |   J  |   L  |   U  |   Y  |   ;  | Bksp |
@@ -60,22 +77,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ADJUST,                LM(_RAISE, MOD_LGUI), KC_LGUI, KC_LALT, LOWER,   KC_SPC,  KC_SPC,  RAISE,   MT(MOD_LALT, KC_LEFT), MT(MOD_LGUI, KC_DOWN), KC_UP,   MT(MOD_LALT, KC_RGHT)  \
 ),
 
-/* Dvorak
+/* Steno layout layer (http://opensteno.org)
  * ,-----------------------------------------------------------------------------------.
- * | Tab  |   "  |   ,  |   .  |   P  |   Y  |   F  |   G  |   C  |   R  |   L  | Bksp |
+ * |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Esc  |   A  |   O  |   E  |   U  |   I  |   D  |   H  |   T  |   N  |   S  |  /   |
+ * |  FN  |   S  |   T  |   P  |   H  |   *  |   *  |   F  |   P  |   L  |   T  |   D  |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * | Shift|   ;  |   Q  |   J  |   K  |   X  |   B  |   M  |   W  |   V  |   Z  |Enter |
+ * |      |   S  |   K  |   W  |   R  |   *  |   *  |   R  |   B  |   G  |   S  |   Z  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |Adjust| Ctrl | Alt  | GUI  |Lower |Space |Space |Raise | Left | Down |  Up  |Right |
+ * | Exit |      |      |   A  |   O  |             |   E  |   U  |  PWR | RES1 | RES2 |
  * `-----------------------------------------------------------------------------------'
  */
-[_DVORAK] = LAYOUT_ortho_4x12( \
-  KC_TAB,                KC_QUOT,              KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,                  KC_R,                  KC_L,  KC_BSPC,               \
-  MT(MOD_LCTL, KC_ESC),  KC_A,                 KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,                  KC_N,                  KC_S,  MT(MOD_RCTL, KC_SLSH), \
-  MT(MOD_LSFT, KC_CAPS), KC_SCLN,              KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,                  KC_V,                  KC_Z,  MT(MOD_RSFT, KC_ENT),  \
-  ADJUST,                LM(_RAISE, MOD_LGUI), KC_LGUI, KC_LALT, LOWER,   KC_SPC,  KC_SPC,  RAISE,   MT(MOD_LALT, KC_LEFT), MT(MOD_LGUI, KC_DOWN), KC_UP, MT(MOD_LALT, KC_RGHT)  \
+
+[_STENO] = LAYOUT_ortho_4x12( \
+  STN_N1,  STN_N2,  STN_N3,  STN_N4,  STN_N5,  STN_N6,  STN_N7,  STN_N8,  STN_N9,  STN_NA,  STN_NB,  STN_NC, \
+  STN_FN,  STN_S1,  STN_TL,  STN_PL,  STN_HL,  STN_ST1, STN_ST3, STN_FR,  STN_PR,  STN_LR,  STN_TR,  STN_DR, \
+  XXXXXXX, STN_S2,  STN_KL,  STN_WL,  STN_RL,  STN_ST2, STN_ST4, STN_RR,  STN_BR,  STN_GR,  STN_SR,  STN_ZR, \
+  _______, XXXXXXX, XXXXXXX, STN_A,   STN_O,   XXXXXXX, XXXXXXX, STN_E,   STN_U,   STN_PWR, STN_RE1, STN_RE2
 ),
 
 /* Lower
@@ -113,26 +131,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, KC_F11,  KC_F12,  _______, _______, _______, _______, _______, _______, _______, _______, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY  \
 ),
-
-/* Steno layout layer (http://opensteno.org)
- * ,-----------------------------------------------------------------------------------.
- * |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |  FN  |   S  |   T  |   P  |   H  |   *  |   *  |   F  |   P  |   L  |   T  |   D  |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |   S  |   K  |   W  |   R  |   *  |   *  |   R  |   B  |   G  |   S  |   Z  |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Exit |      |      |   A  |   O  |             |   E  |   U  |  PWR | RES1 | RES2 |
- * `-----------------------------------------------------------------------------------'
- */
-
-[_STENO] = LAYOUT_ortho_4x12( \
-  STN_N1,  STN_N2,  STN_N3,  STN_N4,  STN_N5,  STN_N6,  STN_N7,  STN_N8,  STN_N9,  STN_NA,  STN_NB,  STN_NC, \
-  STN_FN,  STN_S1,  STN_TL,  STN_PL,  STN_HL,  STN_ST1, STN_ST3, STN_FR,  STN_PR,  STN_LR,  STN_TR,  STN_DR, \
-  XXXXXXX, STN_S2,  STN_KL,  STN_WL,  STN_RL,  STN_ST2, STN_ST4, STN_RR,  STN_BR,  STN_GR,  STN_SR,  STN_ZR, \
-  _______, XXXXXXX, XXXXXXX, STN_A,   STN_O,   XXXXXXX, XXXXXXX, STN_E,   STN_U,   STN_PWR, STN_RE1, STN_RE2
-),
-
 
 /* Adjust (Lower + Raise)
  * ,----------------------------------------------------------------------------------------------.
